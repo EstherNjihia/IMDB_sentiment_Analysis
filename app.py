@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from wordcloud import WordCloud
 import joblib
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix
 import re
 
 # Load the spaCy model
 nlp = spacy.load("en_core_web_sm")
 
-# Cache expensive operations
+
 @st.cache_data
 def load_data():
     df = pd.read_csv("data/IMDB dataset.csv")
@@ -19,15 +19,15 @@ def load_data():
 
 @st.cache_resource
 def load_model():
-    model = joblib.load("sentiment_model.pkl")
-    vectorizer = joblib.load("tfidf_vectorizer.pkl")
+    model = joblib.load("models/sentiment_model.pkl")
+    vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
     return model, vectorizer
 
 # Load data and model
 df = load_data()
 model, vectorizer = load_model()
 
-# Preprocess text using spaCy (cached to avoid redundant computation)
+# Preprocess text using spaCy 
 @st.cache_data
 def preprocess_text(text):
     # Remove HTML tags
@@ -154,7 +154,7 @@ def main():
         """
         ---
         **Created by [Esther Njihia](https://github.com/EstherNjihia)**  
-        [![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/yourusername/your-repo)
+        [![GitHub](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/EstherNjihia/IMDB_sentiment_Analysis)
         """,
         unsafe_allow_html=True,
     )
